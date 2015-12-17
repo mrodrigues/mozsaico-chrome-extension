@@ -1,0 +1,9 @@
+{
+  "name": "mozsaico",
+  "private": true,
+  "version": "0.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "jasmine-core": "jasmine#~2.4.1"
+  }
+}

@@ -2,7 +2,9 @@
   "name": "mozsaico",
   "private": true,
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "2.1.4"
+  },
   "devDependencies": {
     "jasmine-core": "jasmine#~2.4.1"
   }

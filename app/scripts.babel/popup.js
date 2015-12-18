@@ -4,7 +4,6 @@
   // ===== Constants ===== //
 
   const baseURL = 'http://localhost:3000';
-  const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE0NTI0NTA1NDl9.z_kFjytmRYRg3kCAPmeUWmn6_41F_Fpqaot79zeIIzkaHdp7zVWUytN13F8ivMql43O4KwhkNvF2j-eHrAdw5g';
 
   // ===== AJAX Requests ===== //
 
@@ -24,7 +23,7 @@
       method: method,
       data: params,
       headers: {
-        Authorization: 'bearer ' + token
+        Authorization: 'bearer ' + localStorage.getItem('access_token')
       }
     });
   }
@@ -127,5 +126,9 @@
     $('.spinner').show();
   }
 
-  chrome.tabs.query({ active: true, lastFocusedWindow: true }, saveCurrentTab);
+  if (localStorage.getItem('access_token')) {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, saveCurrentTab);
+  } else {
+    window.location.pathname = '/login.html';
+  }
 })(jQuery);

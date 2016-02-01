@@ -79,7 +79,7 @@ var gh = (function() {
         }
 
         function exchangeCodeForToken(code) {
-          $.post('http://localhost:3000/api/auth/facebook',
+          $.post('https://mozsaico.herokuapp.com/api/auth/facebook',
               {
                 code: code,
                 redirectUri: redirectUri

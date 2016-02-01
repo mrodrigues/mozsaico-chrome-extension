@@ -3,7 +3,7 @@
 (function IIFE($, window) {
   // ===== Constants ===== //
 
-  const baseURL = 'http://localhost:3000';
+  const baseURL = 'https://mozsaico.herokuapp.com';
 
   // ===== AJAX Requests ===== //
 

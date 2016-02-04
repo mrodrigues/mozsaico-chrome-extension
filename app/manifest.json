@@ -10,6 +10,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "scripts/chromereload.js",
       "bower_components/jquery/dist/jquery.js",
       "scripts/DoRequest.js",
       "scripts/Routes.js",

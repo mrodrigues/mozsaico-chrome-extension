@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE($, window) {
+(function IIFE($, window, UserData) {
   // ===== Constants ===== //
 
   const baseURL = 'http://mozsaico.herokuapp.com';
@@ -25,8 +25,8 @@
       method: method,
       data: params,
       headers: {
-        Authorization: 'bearer ' + localStorage.getItem('access_token')
+        Authorization: 'bearer ' + UserData.getToken()
       }
     });
   }
-})(jQuery, window);
+})(jQuery, window, UserData);

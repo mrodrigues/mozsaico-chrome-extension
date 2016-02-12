@@ -5,7 +5,8 @@
 
   const ViewRoutes = {
     groups: {
-      show: showGroup
+      show: showGroup,
+      all: allGroupsForUser
     },
     topics: {
       show: showTopic
@@ -16,6 +17,10 @@
 
   function showGroup(group) {
     return `${baseURL}/groups/${group.id}/topics`;
+  }
+
+  function allGroupsForUser(user) {
+    return `${baseURL}/@${user.username}/groups`;
   }
 
   function showTopic(group, topic) {

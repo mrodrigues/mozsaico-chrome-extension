@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE($, DoRequest, ApiRoutes, ViewRoutes) {
+(function IIFE($, DoRequest, ApiRoutes, ViewRoutes, UserData) {
   // ===== State ===== //
 
   class State {
@@ -52,6 +52,10 @@
     return $(`<a>${group.name}</a>`).data('group', group).click(updateGroup);
   }
 
+  function renderCurrentUser(user) {
+    return renderLink(ViewRoutes.groups.all(user), "Ir para meu Mozsaico");
+  }
+
   function updateGroup() {
     let group = $(this).data('group');
     let data = { topic: { group_id: group.id } };
@@ -70,6 +74,7 @@
 
   function init() {
     showSpinner();
+    $("#user-page").html(renderCurrentUser(UserData.getUser()));
     DoRequest.get(ApiRoutes.groups.all())
       .then(state.setGroups.bind(state))
       .then(() => {
@@ -113,9 +118,9 @@
     $('.spinner').show();
   }
 
-  if (localStorage.getItem('access_token')) {
+  if (UserData.getUser()) {
     init();
   } else {
     window.location.pathname = '/login.html';
   }
-})(jQuery, DoRequest, ApiRoutes, ViewRoutes);
+})(jQuery, DoRequest, ApiRoutes, ViewRoutes, UserData);

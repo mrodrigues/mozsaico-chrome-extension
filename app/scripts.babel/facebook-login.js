@@ -1,4 +1,4 @@
-var gh = (function() {
+var gh = (function(UserData) {
   'use strict';
 
   var signin_button;
@@ -65,17 +65,23 @@ var gh = (function() {
         }
 
         function handleProviderResponse(values) {
-          console.log(arguments);
-          if (values.hasOwnProperty('access_token'))
+          if (values.hasOwnProperty('access_token')) {
             setAccessToken(values.access_token);
-          else if (values.hasOwnProperty('code'))
+          } else if (values.hasOwnProperty('code')) {
             exchangeCodeForToken(values.code);
-          else callback(new Error('Neither access_token nor code avialable.'));
+          } else {
+            callback(new Error('Neither access_token nor code avialable.'));
+          }
         }
 
         function setAccessToken(token) {
           access_token = token;
-          callback(null, access_token);
+          callback(null, { token: access_token });
+        }
+
+        function setCurrentUser(user) {
+          access_token = user.token;
+          callback(null, user);
         }
 
         function exchangeCodeForToken(code) {
@@ -83,7 +89,7 @@ var gh = (function() {
               {
                 code: code,
                 redirectUri: redirectUri
-              }).then((data) => setAccessToken(data.token));
+              }).then(setCurrentUser);
         }
       },
 
@@ -173,8 +179,8 @@ var gh = (function() {
 
   function interactiveSignIn() {
     disableButton(signin_button);
-    tokenFetcher.getToken(true, function(error, access_token) {
-      localStorage.setItem('access_token', access_token);
+    tokenFetcher.getToken(true, function(error, user) {
+      UserData.setUserData(user);
       window.location.pathname = 'popup.html';
     });
   }
@@ -199,6 +205,6 @@ var gh = (function() {
       // getUserInfo(false);
     }
   };
-})();
+})(UserData);
 
 window.onload = gh.onload;

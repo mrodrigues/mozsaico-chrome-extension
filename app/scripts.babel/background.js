@@ -27,9 +27,9 @@
 
   function updateIcon() {
     if (currentTopic !== null) {
-      chrome.browserAction.setBadgeText({text: 'Saved'});
+      chrome.browserAction.setIcon({ path: 'images/icon-128.png' });
     } else {
-      chrome.browserAction.setBadgeText({text: 'New'});
+      chrome.browserAction.setIcon({ path: 'images/not-saved-yet.png' });
     }
   }
 

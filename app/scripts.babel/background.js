@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE(chrome, DoRequest, Routes) {
+(function IIFE(chrome, DoRequest, ApiRoutes) {
   chrome.runtime.onInstalled.addListener(details => {
     console.log('previousVersion', details.previousVersion);
   });
@@ -10,7 +10,7 @@
   function checkCurrentTab() {
     chrome.tabs.query({ currentWindow: true, active: true  }, function fetchCurrentTab(tabs) {
       currentUrl = tabs[0].url;
-      DoRequest.get(Routes.topics.find(), { content: currentUrl })
+      DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
         .done(setTopic)
         .fail(unsetTopic)
         .always(updateIcon);
@@ -47,4 +47,4 @@
         break;
     }
   });
-})(chrome, DoRequest, Routes);
+})(chrome, DoRequest, ApiRoutes);

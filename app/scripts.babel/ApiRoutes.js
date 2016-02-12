@@ -1,9 +1,7 @@
 'use strict';
 
 (function IIFE(window) {
-  // ===== Routes ===== //
-
-  const Routes = {
+  const ApiRoutes = {
     groups: {
       all: allGroups
     },
@@ -14,7 +12,7 @@
     }
   };
 
-  window.Routes = Routes;
+  window.ApiRoutes = ApiRoutes;
 
   function allGroups() {
     return '/api/groups';

@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE($, DoRequest, Routes) {
+(function IIFE($, DoRequest, ApiRoutes, ViewRoutes, UserData) {
   // ===== State ===== //
 
   class State {
@@ -13,10 +13,12 @@
     setGroups(groups) {
       this.groups = groups;
       this.container.html(renderGroups(this.groups));
+      return groups;
     }
 
     setTopic(topic) {
       this.topic = topic;
+      return topic;
     }
   }
 
@@ -30,21 +32,37 @@
            );
   }
 
-  function renderGroup(group) {
-    return $('<li>').append(renderLink(group));
+  function renderLink(href, text) {
+    return `<a href="${href}" target="_blank">${text}</a>`;
   }
 
-  function renderLink(group) {
+  function renderLinkToGroup(group) {
+    return renderLink(ViewRoutes.groups.show(group), group.name);
+  }
+
+  function renderLinkToTopic(group, topic) {
+    return renderLink(ViewRoutes.topics.show(group, topic), "Página");
+  }
+
+  function renderGroup(group) {
+    return $('<li>').append(renderChooseGroupButton(group));
+  }
+
+  function renderChooseGroupButton(group) {
     return $(`<a>${group.name}</a>`).data('group', group).click(updateGroup);
+  }
+
+  function renderCurrentUser(user) {
+    return renderLink(ViewRoutes.groups.all(user), "Ir para meu Mozsaico");
   }
 
   function updateGroup() {
     let group = $(this).data('group');
     let data = { topic: { group_id: group.id } };
     showSpinner();
-    DoRequest.patch(Routes.topics.update(state.topic), data)
+    DoRequest.patch(ApiRoutes.topics.update(state.topic), data)
       .then(() => state.topic.group_id = group.id)
-      .then(setMessage(`Adicionado ao grupo ${group.name}!`))
+      .then(setMessage(`${renderLinkToTopic(group, state.topic)} adicionado ao grupo ${renderLinkToGroup(group)}!`))
       .then(hideSpinner);
   }
 
@@ -56,7 +74,8 @@
 
   function init() {
     showSpinner();
-    DoRequest.get(Routes.groups.all())
+    $("#user-page").html(renderCurrentUser(UserData.getUser()));
+    DoRequest.get(ApiRoutes.groups.all())
       .then(state.setGroups.bind(state))
       .then(() => {
         chrome.runtime.sendMessage(
@@ -70,12 +89,15 @@
     if (currentTopic) {
       state.setTopic(currentTopic);
       let group = state.groups.find((g) => g.id === currentTopic.group_id);
-      setMessage(`Página está salva no grupo ${group.name}, caso queira alterar selecione abaixo:`)();
+      setMessage(`${renderLinkToTopic(group, currentTopic)} salva no grupo ${renderLinkToGroup(group)}, caso queira alterar selecione abaixo:`)();
       hideSpinner();
     } else {
-      DoRequest.post(Routes.topics.create(), { topic: { content: currentUrl } })
+      DoRequest.post(ApiRoutes.topics.create(), { topic: { content: currentUrl } })
         .then((topic) => state.setTopic(topic))
-        .then(setMessage('Página adicionada ao grupo Outros! Caso queira alterar para outro grupo, selecione abaixo:'))
+        .then((topic) => {
+          let group = { name: "Outros", id: topic.group_id };
+          setMessage(`${renderLinkToTopic(group, topic)} adicionada ao grupo ${renderLinkToGroup(group)}! Caso queira alterar para outro grupo, selecione abaixo:`)();
+        })
         .then(hideSpinner)
         .then(() => {
           chrome.runtime.sendMessage({
@@ -96,9 +118,9 @@
     $('.spinner').show();
   }
 
-  if (localStorage.getItem('access_token')) {
+  if (UserData.getUser()) {
     init();
   } else {
     window.location.pathname = '/login.html';
   }
-})(jQuery, DoRequest, Routes);
+})(jQuery, DoRequest, ApiRoutes, ViewRoutes, UserData);

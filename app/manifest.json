@@ -5,6 +5,7 @@
   "description": "__MSG_appDescription__",
   "icons": {
     "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
     "128": "images/icon-128.png"
   },
   "default_locale": "en",
@@ -12,8 +13,10 @@
     "scripts": [
       "scripts/chromereload.js",
       "bower_components/jquery/dist/jquery.js",
+      "scripts/UserData.js",
       "scripts/DoRequest.js",
-      "scripts/Routes.js",
+      "scripts/ApiRoutes.js",
+      "scripts/ViewRoutes.js",
       "scripts/background.js"
     ]
   },

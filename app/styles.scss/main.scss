@@ -2,3 +2,9 @@ $padding: 20px;
 body {
   padding: $padding;
 }
+
+a {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}

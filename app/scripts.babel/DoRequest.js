@@ -1,9 +1,9 @@
 'use strict';
 
-(function IIFE($, window) {
+(function IIFE($, window, UserData) {
   // ===== Constants ===== //
 
-  const baseURL = 'https://mozsaico.herokuapp.com';
+  const baseURL = 'http://mozsaico.herokuapp.com';
 
   // ===== AJAX Requests ===== //
 
@@ -25,8 +25,8 @@
       method: method,
       data: params,
       headers: {
-        Authorization: 'bearer ' + localStorage.getItem('access_token')
+        Authorization: 'bearer ' + UserData.getToken()
       }
     });
   }
-})(jQuery, window);
+})(jQuery, window, UserData);

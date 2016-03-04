@@ -5,12 +5,14 @@
     console.log('previousVersion', details.previousVersion);
   });
 
-  let currentTopic = null;
-  let currentUrl = null;
+  let currentTopic;
+  let currentUrl;
+  let currentRequest;
   function checkCurrentTab() {
     chrome.tabs.query({ currentWindow: true, active: true  }, function fetchCurrentTab(tabs) {
       currentUrl = tabs[0].url;
-      DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
+      currentRequest && currentRequest.abort();
+      currentRequest = DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
         .done(setTopic)
         .fail(unsetTopic)
         .always(updateIcon);

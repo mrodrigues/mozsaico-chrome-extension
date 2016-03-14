@@ -1,4 +1,4 @@
-var gh = (function(UserData) {
+var gh = (function(UserData, Settings) {
   'use strict';
 
   var signin_button;
@@ -85,7 +85,7 @@ var gh = (function(UserData) {
         }
 
         function exchangeCodeForToken(code) {
-          $.post('https://mozsaico.herokuapp.com/api/auth/facebook',
+          $.post(`${Settings.baseUrl}/api/auth/facebook`,
               {
                 code: code,
                 redirectUri: redirectUri
@@ -205,6 +205,6 @@ var gh = (function(UserData) {
       // getUserInfo(false);
     }
   };
-})(UserData);
+})(UserData, Settings);
 
 window.onload = gh.onload;

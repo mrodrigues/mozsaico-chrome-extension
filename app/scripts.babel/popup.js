@@ -118,9 +118,12 @@
     $('.spinner').show();
   }
 
-  if (UserData.getUser()) {
-    init();
-  } else {
-    window.location.pathname = '/login.html';
-  }
+
+  UserData.whenReady(function initOrLogin() {
+    if (UserData.getUser()) {
+      init();
+    } else {
+      window.location.pathname = '/login.html';
+    }
+  });
 })(jQuery, DoRequest, ApiRoutes, ViewRoutes, UserData);

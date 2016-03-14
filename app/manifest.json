@@ -13,6 +13,7 @@
     "scripts": [
       "scripts/chromereload.js",
       "bower_components/jquery/dist/jquery.js",
+      "scripts/Settings.js",
       "scripts/UserData.js",
       "scripts/DoRequest.js",
       "scripts/ApiRoutes.js",

@@ -1,11 +1,7 @@
 'use strict';
 
-(function IIFE($, window, UserData) {
-  // ===== Constants ===== //
-
-  const baseURL = 'http://mozsaico.herokuapp.com';
-
-  // ===== AJAX Requests ===== //
+(function IIFE($, window, UserData, Settings) {
+  const baseURL = Settings.baseUrl;
 
   const DoRequest = {
     get: buildRequest(baseURL, 'GET'),
@@ -29,4 +25,4 @@
       }
     });
   }
-})(jQuery, window, UserData);
+})(jQuery, window, UserData, Settings);

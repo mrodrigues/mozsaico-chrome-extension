@@ -2,7 +2,7 @@
 
 (function IIFE(window) {
   const Settings = {
-    baseUrl: 'http://localhost:9000'
+    baseUrl: 'http://mozsaico-staging.herokuapp.com'
   };
 
   window.Settings = Settings;

@@ -35,8 +35,21 @@
     }
   }
 
+  function checkNewNotifications() {
+    DoRequest.get(ApiRoutes.notifications.newNotifications()).then(setNewNotificationsCount);
+  }
+
+  function setNewNotificationsCount(response) {
+    var newNotificationsCount = response.new_notifications_count;
+
+    chrome.browserAction.setBadgeText({
+      text: newNotificationsCount > 0 ? newNotificationsCount.toString() : ''
+    });
+  }
+
   chrome.tabs.onUpdated.addListener(checkCurrentTab);
   chrome.tabs.onActivated.addListener(checkCurrentTab);
+  setInterval(checkNewNotifications, 5000);
 
   chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     switch (message.method) {

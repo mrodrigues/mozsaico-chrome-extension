@@ -5,10 +5,16 @@
     groups: {
       all: allGroups
     },
+
     topics: {
       create: createTopic,
       update: updateTopic,
       find: findTopic
+    },
+
+    notifications: {
+      all: allNotifications,
+      newNotifications: newNotifications
     }
   };
 
@@ -28,5 +34,13 @@
 
   function findTopic() {
     return '/api/topics/find';
+  }
+
+  function allNotifications() {
+    return '/api/notifications';
+  }
+
+  function newNotifications() {
+    return `${allNotifications()}/new_notifications`;
   }
 })(window);

@@ -1,13 +1,14 @@
 'use strict';
 
-(function IIFE(window) {
-  const baseURL = 'http://mozsaico.herokuapp.com';
+(function IIFE(window, Settings) {
+  const baseURL = Settings.baseUrl;
 
   const ViewRoutes = {
     groups: {
       show: showGroup,
       all: allGroupsForUser
     },
+
     topics: {
       show: showTopic
     }
@@ -26,4 +27,4 @@
   function showTopic(group, topic) {
     return `${showGroup(group)}/${topic.id}`;
   }
-})(window);
+})(window, Settings);

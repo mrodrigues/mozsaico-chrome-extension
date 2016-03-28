@@ -118,7 +118,6 @@
     $('.spinner').show();
   }
 
-
   UserData.whenReady(function initOrLogin() {
     if (UserData.getUser()) {
       init();

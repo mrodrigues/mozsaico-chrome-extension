@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE($, window, UserData, Settings) {
+window.DoRequest = (function IIFE($, UserData, Settings) {
   const baseURL = Settings.baseUrl;
 
   const DoRequest = {
@@ -9,7 +9,7 @@
     patch: buildRequest(baseURL, 'PATCH')
   };
 
-  window.DoRequest = DoRequest;
+  return DoRequest;
 
   function buildRequest(url, method) {
     return (path, params = {}) => sendRequest(url + path, method, params);
@@ -25,4 +25,4 @@
       }
     });
   }
-})(jQuery, window, UserData, Settings);
+})(jQuery, UserData, Settings);

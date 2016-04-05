@@ -1,9 +1,9 @@
 'use strict';
 
-(function IIFE(window) {
+window.Settings = (function IIFE() {
   const Settings = {
     baseUrl: 'http://mozsaico-staging.herokuapp.com'
   };
 
-  window.Settings = Settings;
-})(window);
+  return Settings;
+})();

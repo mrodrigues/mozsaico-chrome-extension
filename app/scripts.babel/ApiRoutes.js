@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE(window) {
+window.ApiRoutes = (function IIFE() {
   const ApiRoutes = {
     groups: {
       all: allGroups
@@ -18,7 +18,7 @@
     }
   };
 
-  window.ApiRoutes = ApiRoutes;
+  return ApiRoutes;
 
   function allGroups() {
     return '/api/groups';
@@ -43,4 +43,4 @@
   function newNotifications() {
     return `${allNotifications()}/new_notifications`;
   }
-})(window);
+})();

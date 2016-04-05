@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE(window, $, Settings) {
+window.UserData = (function IIFE(window, $, Settings) {
   const WEBAPP_URL = `${Settings.baseUrl}/assets/extension_access.html`;
   let webapp;
   let readyCallback;
@@ -12,9 +12,9 @@
     whenReady
   };
 
-  window.UserData = UserData;
-
   $(setWebapp);
+
+  return UserData;
 
   function setUserData(userData) {
     localStorage.setItem('userData', JSON.stringify(userData));

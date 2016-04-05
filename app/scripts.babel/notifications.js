@@ -19,11 +19,27 @@
   }
 
   function renderNotification(notification) {
+    switch (notification.type) {
+      case 'mention': return renderMentionNotification(notification);
+      case 'new_topic': return renderNewTopicNotification(notification);
+      default: throw `Unexpected notification type: ${notification.type}`;
+    }
+  }
+
+  function renderMentionNotification(notification) {
     let group = { id: notification.notifiable.group_id };
     let topic = { id: notification.notifiable.topic_id };
 
     return `<li>
              ${renderLinkToUser(notification.author)} mencionou você em um ${renderLinkToTopic(group, topic)}
+           </li>`;
+  }
+
+  function renderNewTopicNotification(notification) {
+    let topic = notification.notifiable;
+
+    return `<li>
+             ${renderLinkToUser(notification.author)} adicionou um ${renderLinkToTopic(topic.group, topic)} no grupo ${renderLinkToGroup(topic.group)}
            </li>`;
   }
 
@@ -33,6 +49,10 @@
 
   function renderLinkToTopic(group, topic) {
     return renderLink(ViewRoutes.topics.show(group, topic), "tópico");
+  }
+
+  function renderLinkToGroup(group) {
+    return renderLink(ViewRoutes.groups.show(group), group.name);
   }
 
   function renderLink(href, text) {

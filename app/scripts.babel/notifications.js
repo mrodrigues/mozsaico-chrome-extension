@@ -22,6 +22,7 @@
     switch (notification.type) {
       case 'mention': return renderMentionNotification(notification);
       case 'new_topic': return renderNewTopicNotification(notification);
+      case 'new_comment': return renderNewCommentNotification(notification);
       default: throw `Unexpected notification type: ${notification.type}`;
     }
   }
@@ -40,6 +41,15 @@
 
     return `<li>
              ${renderLinkToUser(notification.author)} adicionou um ${renderLinkToTopic(topic.group, topic)} no grupo ${renderLinkToGroup(topic.group)}
+           </li>`;
+  }
+
+  function renderNewCommentNotification(notification) {
+    let group = { id: notification.notifiable.group_id };
+    let topic = { id: notification.notifiable.topic_id };
+
+    return `<li>
+             ${renderLinkToUser(notification.author)} fez um comentário em um ${renderLinkToTopic(group, topic)} que você está seguindo.
            </li>`;
   }
 

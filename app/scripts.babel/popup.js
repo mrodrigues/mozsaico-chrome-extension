@@ -61,7 +61,7 @@
     let data = { topic: { group_id: group.id } };
     showSpinner();
     DoRequest.patch(ApiRoutes.topics.update(state.topic), data)
-      .then(() => state.topic.group_id = group.id)
+      .then(() => state.topic.group = group.id)
       .then(setMessage(`${renderLinkToTopic(group, state.topic)} adicionado ao grupo ${renderLinkToGroup(group)}!`))
       .then(hideSpinner);
   }
@@ -88,14 +88,14 @@
   function saveCurrentUrl({ currentTopic, currentUrl }) {
     if (currentTopic) {
       state.setTopic(currentTopic);
-      let group = state.groups.find((g) => g.id === currentTopic.group_id);
+      let group = state.groups.find((g) => g.id === currentTopic.group.id);
       setMessage(`${renderLinkToTopic(group, currentTopic)} salva no grupo ${renderLinkToGroup(group)}, caso queira alterar selecione abaixo:`)();
       hideSpinner();
     } else {
       DoRequest.post(ApiRoutes.topics.create(), { topic: { content: currentUrl } })
         .then((topic) => state.setTopic(topic))
         .then((topic) => {
-          let group = { name: "Outros", id: topic.group_id };
+          let group = { name: "Outros", id: topic.group.id };
           setMessage(`${renderLinkToTopic(group, topic)} adicionada ao grupo ${renderLinkToGroup(group)}! Caso queira alterar para outro grupo, selecione abaixo:`)();
         })
         .then(hideSpinner)

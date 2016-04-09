@@ -29,7 +29,7 @@ window.ApiRoutes = (function IIFE() {
   }
 
   function updateTopic(topic) {
-    return '/api/groups/' + topic.group_id + '/topics/' + topic.id;
+    return '/api/groups/' + topic.group.id + '/topics/' + topic.id;
   }
 
   function findTopic() {

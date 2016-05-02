@@ -4,6 +4,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import replace from 'gulp-replace';
 
 const $ = gulpLoadPlugins();
 
@@ -95,7 +96,13 @@ gulp.task('chromeManifest', () => {
 });
 
 gulp.task('babel', () => {
+  let env = gulp.env.env || 'development';
+  if (env !== 'production' && env !== 'staging' && env !== 'development') {
+    throw new Error(`Invalid environment: ${env}`);
+  }
+
   return gulp.src('app/scripts.babel/**/*.js')
+      .pipe(replace('<!-- build:env -->', env))
       .pipe($.babel({
         presets: ['es2015']
       }))

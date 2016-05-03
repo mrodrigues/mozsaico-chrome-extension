@@ -149,7 +149,7 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
+    'babel', 'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
 });

@@ -57,12 +57,12 @@
   }
 
   function updateGroup() {
-    let group = $(this).data('group');
-    let data = { topic: { group_id: group.id } };
+    let newGroup = $(this).data('group');
+    let data = { topic: { group_id: newGroup.id } };
     showSpinner();
     DoRequest.patch(ApiRoutes.topics.update(state.topic), data)
-      .then(() => state.topic.group = group.id)
-      .then(setMessage(`${renderLinkToTopic(group, state.topic)} adicionado ao grupo ${renderLinkToGroup(group)}!`))
+      .then((topic) => state.topic = topic)
+      .then(setMessage(`${renderLinkToTopic(newGroup, state.topic)} adicionado ao grupo ${renderLinkToGroup(newGroup)}!`))
       .then(hideSpinner);
   }
 

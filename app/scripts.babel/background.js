@@ -10,12 +10,14 @@
   let currentRequest;
   function checkCurrentTab() {
     chrome.tabs.query({ currentWindow: true, active: true  }, function fetchCurrentTab(tabs) {
-      currentUrl = tabs[0].url;
-      currentRequest && currentRequest.abort();
-      currentRequest = DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
-        .done(setTopic)
-        .fail(unsetTopic)
-        .always(updateIcon);
+      if (tabs.length) {
+        currentUrl = tabs[0].url;
+        currentRequest && currentRequest.abort();
+        currentRequest = DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
+          .done(setTopic)
+          .fail(unsetTopic)
+          .always(updateIcon);
+      }
     });
   }
 

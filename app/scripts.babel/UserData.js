@@ -57,10 +57,14 @@ window.UserData = (function IIFE(window, $, Settings) {
 
   function fetchUserDataFromWebapp(){
     window.onmessage = function extractAndSetUserData(e) {
-      let user = JSON.parse(e.data);
-      user && setUserData(user);
-      window.onmessage = undefined;
-      resolveReady();
+      if (e.data.success) {
+        let user = JSON.parse(e.data.currentUser);
+        user && setUserData(user);
+        window.onmessage = undefined;
+        resolveReady();
+      } else {
+        console.error(e.data.message);
+      }
     }
 
     webapp.postMessage(JSON.stringify({method: 'getCurrentUser'}), "*");

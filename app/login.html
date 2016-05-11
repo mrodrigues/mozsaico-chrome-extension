@@ -2,15 +2,23 @@
 <html>
   <head>
   	<meta charset="UTF-8">
-    <title>GitHub Auth Sample App</title>
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="scripts/Settings.js"></script>
-    <script type="text/javascript" src="scripts/UserData.js"></script>
-    <script type="text/javascript" src="scripts/facebook-login.js"></script>
+    <title>Login</title>
   </head>
   <body>
     <div id="user_info"></div>
     <button id="signin" style="display:none">Sign in</button>
     <button id="revoke" style="display:none">Revoke token</button>
+
+    <!-- build:js scripts/popup-vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/login.js -->
+    <script src="scripts/Settings.js"></script>
+    <script src="scripts/UserData.js"></script>
+    <script src="scripts/facebook-login.js"></script>
+    <!-- endbuild -->
   </body>
 </html>

@@ -13,7 +13,7 @@
       if (tabs.length) {
         currentUrl = tabs[0].url;
         currentRequest && currentRequest.abort();
-        currentRequest = DoRequest.get(ApiRoutes.topics.find(), { content: currentUrl })
+        currentRequest = DoRequest.get(ApiRoutes.topics.find(), { url: currentUrl })
           .done(setTopic)
           .fail(unsetTopic)
           .always(updateIcon);

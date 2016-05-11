@@ -33,7 +33,8 @@ window.UserData = (function IIFE(window, $, Settings) {
   }
 
   function getUserData() {
-    return JSON.parse(localStorage.getItem('userData')) || {};
+    let data = localStorage.getItem('userData');
+    return data !== "undefined" && JSON.parse(data) || {};
   }
 
   function whenReady(_readyCallback_) {
@@ -58,7 +59,8 @@ window.UserData = (function IIFE(window, $, Settings) {
   function fetchUserDataFromWebapp(){
     window.onmessage = function extractAndSetUserData(e) {
       if (e.data.success) {
-        let user = JSON.parse(e.data.currentUser);
+        let data = e.data.currentUser;
+        let user = data !== "undefined" && JSON.parse(data);
         user && setUserData(user);
         window.onmessage = undefined;
         resolveReady();

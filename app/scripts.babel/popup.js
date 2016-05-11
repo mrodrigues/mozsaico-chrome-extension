@@ -92,7 +92,7 @@
       setMessage(`${renderLinkToTopic(group, currentTopic)} salva no grupo ${renderLinkToGroup(group)}, caso queira alterar selecione abaixo:`)();
       hideSpinner();
     } else {
-      DoRequest.post(ApiRoutes.topics.create(), { topic: { content: currentUrl } })
+      DoRequest.post(ApiRoutes.topics.create(), { topic: { url: currentUrl } })
         .then((topic) => state.setTopic(topic))
         .then((topic) => {
           let group = { name: "Outros", id: topic.group.id };

@@ -26,6 +26,7 @@
     "tabs",
     "app.window",
     "storage",
+    "notifications",
     "http://*/*",
     "https://*/*"
   ],

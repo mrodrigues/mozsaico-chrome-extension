@@ -9,7 +9,8 @@ window.ApiRoutes = (function IIFE() {
     topics: {
       create: createTopic,
       update: updateTopic,
-      find: findTopic
+      find: findTopic,
+      suggest: suggestTopic
     },
 
     notifications: {
@@ -34,6 +35,10 @@ window.ApiRoutes = (function IIFE() {
 
   function findTopic() {
     return '/api/topics/find';
+  }
+
+  function suggestTopic() {
+    return '/api/topics/suggest';
   }
 
   function allNotifications() {

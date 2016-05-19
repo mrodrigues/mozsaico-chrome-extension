@@ -1,6 +1,6 @@
 'use strict';
 
-(function IIFE(chrome, DoRequest, ApiRoutes, ViewRoutes, localStorage) {
+(function IIFE(chrome, DoRequest, ApiRoutes, ViewRoutes, TimeSinkTimer, localStorage) {
   chrome.runtime.onInstalled.addListener(details => {
     console.log('previousVersion', details.previousVersion);
   });
@@ -8,12 +8,18 @@
   let currentTopic;
   let currentUrl;
   let currentRequest;
+
+  let timer = new TimeSinkTimer();
+  timer.onTimeDepleted(
+    () => fetchSuggestion('Que tal aproveitar seu tempo livre para ler algo?')
+  );
+
   function checkCurrentTab() {
     chrome.tabs.query({ currentWindow: true, active: true  }, function fetchCurrentTab(tabs) {
       if (tabs.length) {
         currentUrl = tabs[0].url;
         findTopic(currentUrl);
-        checkTimeSink(currentUrl);
+        timer.checkTimeSink(currentUrl);
       }
     });
   }
@@ -127,60 +133,4 @@
     updatedTipsForDates[date] = true;
     localStorage.setItem('tipsForDates', JSON.stringify(updatedTipsForDates));
   }
-
-  /** Time sink timer **/
-
-  let startedWastingTime;
-  let millisecondsWasted = 0;
-
-  let timerId;
-  function checkTimeSink(currentUrl) {
-    if (isTimeSink(currentUrl)) {
-      startedWastingTime = new Date();
-
-      startTimer();
-    } else {
-      stopTimer();
-
-      if (timeSince(startedWastingTime) > minutes(10)) {
-        millisecondsWasted = 0;
-      }
-    }
-  }
-
-  function startTimer() {
-    if (!timerId) {
-      timerId = setInterval(increaseCounterAndCheckLimit, seconds(1));
-    }
-  }
-
-  function increaseCounterAndCheckLimit(){
-    millisecondsWasted += seconds(1);
-
-    if (millisecondsWasted > minutes(5)) {
-      millisecondsWasted = 0;
-      fetchSuggestion('Que tal aproveitar seu tempo livre para ler algo?');
-    }
-  }
-
-  function stopTimer() {
-    clearInterval(timerId);
-    timerId = undefined;
-  }
-
-  function seconds(n) {
-    return n * 1000;
-  }
-
-  function minutes(n) {
-    return 60 * seconds(1);
-  }
-
-  function timeSince(date) {
-    return new Date() - date;
-  }
-
-  function isTimeSink(currentUrl) {
-    return /https?:\/\/www.facebook.com/.test(currentUrl);
-  }
-})(chrome, DoRequest, ApiRoutes, ViewRoutes, localStorage);
+})(chrome, DoRequest, ApiRoutes, ViewRoutes, TimeSinkTimer, localStorage);

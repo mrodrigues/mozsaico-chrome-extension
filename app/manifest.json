@@ -18,6 +18,7 @@
       "scripts/DoRequest.js",
       "scripts/ApiRoutes.js",
       "scripts/ViewRoutes.js",
+      "scripts/TimeSinkTimer.js",
       "scripts/background.js"
     ]
   },
